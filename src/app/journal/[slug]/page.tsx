@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { JournalArticleHero } from "@/components/journal-article-hero";
@@ -6,20 +7,32 @@ import { JournalArticleByline } from "@/components/journal-article-byline";
 import { JournalArticleBody } from "@/components/journal-article-body";
 import { JournalArticleMeta, JournalArticleAuthorCard } from "@/components/journal-article-author-card";
 import { JournalArticleRelated } from "@/components/journal-article-related";
-import { getJournalPost } from "@/lib/journal";
+import { getJournalPost, getJournalSlugs } from "@/lib/journal";
 
-const SLUG = "the-subtle-art-of-nude-palettes-and-their-many-nuances";
+interface JournalArticlePageProps {
+  params: Promise<{ slug: string }>;
+}
 
-export function generateMetadata(): Metadata {
-  const post = getJournalPost(SLUG);
+export function generateStaticParams() {
+  return getJournalSlugs().map((slug) => ({ slug }));
+}
+
+export async function generateMetadata({ params }: JournalArticlePageProps): Promise<Metadata> {
+  const { slug } = await params;
+  if (!getJournalSlugs().includes(slug)) return {};
+
+  const post = getJournalPost(slug);
   return {
     title: `${post.title} - orchid`,
     description: post.subtitle,
   };
 }
 
-export default function NudePalettesArticlePage() {
-  const post = getJournalPost(SLUG);
+export default async function JournalArticlePage({ params }: JournalArticlePageProps) {
+  const { slug } = await params;
+  if (!getJournalSlugs().includes(slug)) notFound();
+
+  const post = getJournalPost(slug);
 
   return (
     <div className="flex min-h-full flex-col bg-background">
@@ -42,7 +55,7 @@ export default function NudePalettesArticlePage() {
             </div>
           </div>
         </div>
-        <JournalArticleRelated />
+        <JournalArticleRelated currentSlug={post.slug} />
       </main>
       <Footer />
     </div>
