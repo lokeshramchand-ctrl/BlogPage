@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
@@ -8,16 +7,9 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const nikkeiMaru = localFont({
-  src: "../../public/fonts/PPNikkeiMaru-Semibold.woff2",
-  weight: "600",
-  variable: "--font-nikkei-maru",
-  display: "swap",
-});
-
 export const metadata: Metadata = {
-  title: "Blog | Nucleo",
-  description: "Icon design and Nucleo product updates.",
+  title: "Our Journal - orchid",
+  description: "Get fresh thoughts on design and engineering straight to your inbox.",
   icons: { icon: "/favicon.ico" },
 };
 
@@ -27,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${nikkeiMaru.variable} antialiased`}>
+    <html lang="en" className={`${inter.variable} antialiased`}>
       <body>{children}</body>
     </html>
   );
