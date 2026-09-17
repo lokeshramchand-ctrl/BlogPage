@@ -69,7 +69,7 @@ interface JournalArticleBodyProps {
 
 export function JournalArticleBody({ intro, content }: JournalArticleBodyProps) {
   return (
-    <div className="mx-auto flex w-[calc(100%-2.5rem)] max-w-[37.5rem] flex-col">
+    <div className="mx-auto flex w-[calc(100%-2.5rem)] max-w-[42.5rem] flex-col">
       <h2 className="font-display text-[1.875rem] leading-[1.1] font-medium tracking-[-0.04em] text-foreground min-[1200px]:text-[2.4375rem]">
         {intro}
       </h2>

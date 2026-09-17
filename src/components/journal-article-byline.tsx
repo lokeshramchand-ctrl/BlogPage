@@ -14,7 +14,7 @@ interface JournalArticleBylineProps {
 
 export function JournalArticleByline({ author }: JournalArticleBylineProps) {
   return (
-    <div className="mx-auto flex w-[calc(100%-2.5rem)] max-w-[37.5rem] flex-col gap-[30px]">
+    <div className="mx-auto flex w-[calc(100%-2.5rem)] max-w-[42.5rem] flex-col gap-[30px]">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2.5">
           <div className="relative h-[60px] w-[60px] shrink-0 overflow-hidden rounded-full bg-secondary">
