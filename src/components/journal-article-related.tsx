@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRightIcon } from "@/components/icons";
+import { getAllJournalPosts } from "@/lib/journal";
 
 interface RelatedPost {
   slug: string;
@@ -9,30 +10,6 @@ interface RelatedPost {
   image: string;
   alt: string;
 }
-
-const relatedPosts: RelatedPost[] = [
-  {
-    slug: "the-subtle-art-of-nude-palettes-and-their-many-nuances",
-    date: "Jul 3, 2025",
-    title: "The subtle art of nude palettes and textures",
-    image: "/images/journal-tote-bag.png",
-    alt: "Minimal beige canvas tote bag with sturdy handles and a small leather tag on a light gray studio background.",
-  },
-  {
-    slug: "designing-for-motion-not-just-screens",
-    date: "Jul 6, 2025",
-    title: "How Accessible Design Benefits Everyone",
-    image: "/images/journal-face-film.png",
-    alt: "Close-up of a freckled woman behind a translucent film strip—soft, dewy skin, minimal beauty editorial on white.",
-  },
-  {
-    slug: "rethinking-the-design-process",
-    date: "Jul 3, 2025",
-    title: "Rethinking the Design Process",
-    image: "/images/journal-glass-cube.png",
-    alt: "Stacked glass cube with layered translucent liquid on a concrete floor—minimal studio sculpture against a white wall.",
-  },
-];
 
 function RelatedCard({ post }: { post: RelatedPost }) {
   return (
@@ -62,7 +39,18 @@ function RelatedCard({ post }: { post: RelatedPost }) {
   );
 }
 
-export function JournalArticleRelated() {
+export function JournalArticleRelated({ currentSlug }: { currentSlug: string }) {
+  const relatedPosts: RelatedPost[] = getAllJournalPosts()
+    .filter((post) => post.slug !== currentSlug)
+    .slice(0, 3)
+    .map((post) => ({
+      slug: post.slug,
+      date: post.date,
+      title: post.title,
+      image: post.heroImage,
+      alt: post.heroImageAlt,
+    }));
+
   return (
     <section className="mx-auto flex w-[calc(100%-2.5rem)] max-w-[95rem] flex-col gap-14 pt-24 pb-14 min-[1200px]:w-[calc(100%-4.875rem)] min-[1200px]:pt-40">
       <div className="flex flex-col gap-5 min-[1200px]:flex-row min-[1200px]:items-end min-[1200px]:justify-between">
